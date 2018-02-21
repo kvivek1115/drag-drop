@@ -58,11 +58,26 @@ function getFileRecords(file, callback) {
     rawData.send(null);
 }
 
-
+function displayRecords(targetBox, data) {
+	var ul = document.createElement('UL');
+	for (let i = 0; i <= data.length - 1; i++) {
+	 var listItem = document.createElement('LI'); 
+	 var text = document.createTextNode(data[i]['title']);
+	 listItem.className = 'item';
+	 listItem.appendChild(text);
+	 ul.appendChild(listItem);	
+	}
+	targetBox.appendChild(ul);
+}
 function loadRecords() {
 	getFileRecords("data.json", function(text){
 	    var data = JSON.parse(text);
-	    console.log(data);
+	    box2Data = data.filter(function (i,n){return i.category===1;});
+	    box2 = document.getElementById("box-2");
+	    displayRecords(box2, box2Data);
+	    box4Data = data.filter(function (i,n){return i.category===2;});
+	    box4 = document.getElementById("box-4");
+	    displayRecords(box4, box4Data);
     });
 }
 window.onload = function(){loadRecords();};
