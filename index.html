@@ -46,9 +46,24 @@
 </body>
 </html>
 <script type="text/javascript">
-	
+function getFileRecords(file, callback) {
+    var rawData = new XMLHttpRequest();
+    rawData.overrideMimeType("application/json");
+    rawData.open("GET", file, true);
+    rawData.onreadystatechange = function() {
+        if (rawData.readyState === 4 && rawData.status == "200") {
+            callback(rawData.responseText);
+        }
+    }
+    rawData.send(null);
+}
+
+
 function loadRecords() {
-	console.log("start");
+	getFileRecords("data.json", function(text){
+	    var data = JSON.parse(text);
+	    console.log(data);
+    });
 }
 window.onload = function(){loadRecords();};
 
